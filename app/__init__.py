@@ -23,6 +23,8 @@ def create_app(config_name):
     config[config_name].init_app(app)
 
     db.init_app(app)
+    
+    app.debug = True
     #login_manager.init_app(app)
     
     #assets.init_app(app)

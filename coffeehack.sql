@@ -1,6 +1,6 @@
 
 CREATE TABLE coffeedata (
-    id bigint NOT NULL PRIMARY KEY,
+    id bigserial NOT NULL PRIMARY KEY,
     temperature numeric,
     measurement_timestamp timestamp
 );

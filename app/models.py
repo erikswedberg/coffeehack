@@ -1,6 +1,6 @@
 from datetime import datetime
 from flask import current_app, request, url_for, jsonify, url_for, json
-from sqlalchemy import func, distinct, desc
+from sqlalchemy import func, distinct, desc, Sequence
 from . import db
 from . import pG
 from .helpers import FindWhere, AutoSerialize, SanitizeURLName, UnicodeRegexpEscape, num
@@ -43,10 +43,11 @@ class Coffeedata(db.Model, AutoSerialize):
     #airquality_raw = db.Column(db.Numeric)
     #sound = db.Column(db.Numeric)
     #dust = db.Column(db.Numeric)
+    
     measurement_timestamp = db.Column(db.DateTime)
     
     #def __init__(self, city_id, temperature, humidity, light, airquality_raw, sound, dust, measurement_timestamp=None):
-    def __init__(self, temperature):
+    def __init__(self, temperature, measurement_timestamp=None):
         #self.city_id = city_id
         self.temperature = temperature
         #self.humidity = humidity
@@ -54,15 +55,18 @@ class Coffeedata(db.Model, AutoSerialize):
         #self.airquality_raw = airquality_raw
         #self.sound = sound
         #self.dust = dust
-        self.measurement_timestamp = datetime.utcnow()
+        current_datetime = datetime.utcnow()
+        if measurement_timestamp is None:
+            measurement_timestamp = current_datetime
+        self.measurement_timestamp = measurement_timestamp
 
+    '''
     @staticmethod
     def Create(data):
         new_datacanvas = Coffeedata(data['temperature'])
         db.session.add(new_datacanvas)
         db.session.commit()
         return new_datacanvas
-
     @staticmethod
     def GetOrCreate(data):
         
@@ -81,6 +85,7 @@ class Coffeedata(db.Model, AutoSerialize):
             #print 'datacanvas_result'
             #print datacanvas_result
             return datacanvas_result
+    '''
     
     def __repr__(self):
         return '<Coffeedata %r %r %r>' % (unicode(self.id), unicode(self.temperature), unicode(self.measurement_timestamp))

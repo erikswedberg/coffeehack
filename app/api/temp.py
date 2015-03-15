@@ -24,9 +24,24 @@ def fonts():
                 'temperature': request.args.get('temp')
             }
             coffeedata = Coffeedata(temperature=data['temperature'])
+            db.session.add(coffeedata)
+            db.session.commit()
             return_data['success'] = 'success'
-            return_data['temp'] = coffeedata.temperature
+            return_data['temp'] = str(coffeedata.temperature)
             return_data['measurement_timestamp'] = coffeedata.measurement_timestamp
+            return_data['id'] = coffeedata.id
+            
+        else:
+            coffeedatas = Coffeedata.query.all()
+            return_data = []
+            for cd in coffeedatas:
+                
+                data_temp = {}
+                data_temp['id'] = cd.id
+                data_temp['temp'] = str(cd.temperature)
+                data_temp['measurement_timestamp'] = str(cd.measurement_timestamp)
+                
+                return_data.append(data_temp)
             
         return jsonify(data=return_data)
         
