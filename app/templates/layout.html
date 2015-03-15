@@ -1,0 +1,61 @@
+{% extends "layout.html" %}
+{% block body %}
+
+	<div id="main-page">		
+	</div>
+
+{% endblock %}
+{% block script %}
+
+    <script>
+        //Load common code that includes config, then load the app
+        //logic for this page. Do the require calls here instead of
+        //a separate file so after a build there are only 2 HTTP
+        //requests instead of three.
+        
+		/*
+		require(['static/js/common'], function (common) {
+            //js/common sets the baseUrl to be js/ so
+            //can just ask for 'app/main1' here instead
+            //of 'js/app/main1'			
+			
+			 require(['app/pages/main', 'domReady!'], function(MainPage, doc) {
+				 
+				var fontjson = ;
+				var user = {
+					'display_name': '{{ current_user.display_name }}',
+					'id': {{ current_user.get_id() }}
+				};
+
+				var page = new MainPage({id: 'main-page', fonts: fontjson, user: user});
+			 });
+		 
+		});
+		
+		
+		
+		//UNCOMMENT FOR PRODUCTION
+		require.config({
+                paths: {
+                    //Comment out this line to go back to loading
+                    //the non-optimized main.js source file.
+                    "main": "main"
+              }
+		});
+        require(["static/js/main"], function(main) {
+			 require(['app/pages/main', 'domReady!'], function(MainPage, doc) {
+				 
+				var fontjson = ;
+				var user = {
+					'display_name': '{{ current_user.display_name }}',
+					'id': {{ current_user.get_id() }}
+				};
+		
+				var page = new MainPage({id: 'main-page', fonts: fontjson, user: user});
+			});
+		});
+		*/
+		
+    </script>
+
+{% endblock %}
