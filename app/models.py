@@ -89,3 +89,59 @@ class Coffeedata(db.Model, AutoSerialize):
     
     def __repr__(self):
         return '<Coffeedata %r %r %r>' % (unicode(self.id), unicode(self.temperature), unicode(self.measurement_timestamp))
+
+
+
+class Coffeestate(db.Model, AutoSerialize):
+    __tablename__ = 'coffeestate'
+    __public__ = ('id', 'power', 'brew')
+    #we're going to use 'id' as the url_name for users, because email addresses, display names, usernames, etc. can be duplicated across domains
+    #   the only unique field is actually apple_id and by extension, our generated primary key 'id'
+
+    id = db.Column(db.BigInteger, primary_key = True)
+    #city_id = db.Column(db.BigInteger, db.ForeignKey('city.id'))
+    power = db.Column(db.String)
+    #humidity = db.Column(db.Numeric)
+    #light = db.Column(db.Numeric)
+    #airquality_raw = db.Column(db.Numeric)
+    #sound = db.Column(db.Numeric)
+    #dust = db.Column(db.Numeric)
+    brew = db.Column(db.String)
+    
+    #def __init__(self, city_id, temperature, humidity, light, airquality_raw, sound, dust, measurement_timestamp=None):
+    def __init__(self, power, brew=None):
+        #self.city_id = city_id
+        self.power = power
+        self.brew = brew
+
+
+    '''
+    @staticmethod
+    def Create(data):
+        new_datacanvas = Coffeedata(data['temperature'])
+        db.session.add(new_datacanvas)
+        db.session.commit()
+        return new_datacanvas
+    @staticmethod
+    def GetOrCreate(data):
+        
+        #print data['city_id']
+        #print data['measurement_timestamp']
+        
+        datacanvas_result = Coffeedata.query.filter_by(id=data['id']).filter(Coffeedata.measurement_timestamp == data['measurement_timestamp']).first()
+        #datacanvas_result = None
+        if datacanvas_result is None:
+            #print 'datacanvas_result is None'
+            new_datacanvas = Coffeedata( data['temperature'], data['measurement_timestamp'])
+            db.session.add(new_datacanvas)
+            db.session.commit()
+            return new_datacanvas
+        else:
+            #print 'datacanvas_result'
+            #print datacanvas_result
+            return datacanvas_result
+    '''
+    
+    def __repr__(self):
+        return '<Coffeestate %r %r %r>' % (unicode(self.id), unicode(self.power), unicode(self.brew))
+
