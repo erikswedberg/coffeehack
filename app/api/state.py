@@ -26,17 +26,12 @@ def state():
             }
             
             coffeestate = Coffeestate.query.first()
-            
-            print coffeestate 
-            print data
-            
+                        
             if isinstance(coffeestate, Coffeestate):    
                 if data['power'] == 'Off' or data['power'] == 'On':
-                    print 1
                     coffeestate.power = data['power']
                 if data['brew'] == 'Light' or data['brew'] == 'Medium' or data['brew'] == 'Strong':
                     coffeestate.brew = data['brew']
-                    print 2
             
                 #db.session.add(coffeestate)
                 db.session.commit()
