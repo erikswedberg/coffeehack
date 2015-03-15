@@ -13,6 +13,7 @@ from ..helpers import UnicodeReader, ParseUrlCsv, shell
 #from ..models import Product, Release, Fontversion2Release
 from ..models import Coffeedata
 
+@api.route('/temp', methods=['GET'])
 @api.route('/temp/', methods=['GET'])
 def fonts():
     if request.method == 'GET':
@@ -24,9 +25,7 @@ def fonts():
                 'temperature': request.args.get('temp')
             }
             coffeedata = Coffeedata(temperature=data['temperature'])
-            
-            print db 
-            
+                        
             db.session.add(coffeedata)
             db.session.commit()
             return_data['success'] = 'success'
