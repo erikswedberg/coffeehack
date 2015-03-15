@@ -24,6 +24,9 @@ def fonts():
                 'temperature': request.args.get('temp')
             }
             coffeedata = Coffeedata(temperature=data['temperature'])
+            
+            print db 
+            
             db.session.add(coffeedata)
             db.session.commit()
             return_data['success'] = 'success'
