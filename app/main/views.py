@@ -19,7 +19,7 @@ from ..models import Coffeedata
 #@login_required
 def index():
     if request.method == 'GET':
-        
+                
         '''
         data = {}
         sort = ''

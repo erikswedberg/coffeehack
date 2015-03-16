@@ -10,6 +10,12 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+	    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+
+	    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+
+
+
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
 		<!--{ % assets "less_bundle" % }
@@ -28,21 +34,95 @@
 
         <!-- Add your site or application content here -->
 		<div class="main">
-			coffee hack
+
+			<h1>Most Internet-connected Coffee Maker</h1>
+			<h2>RFC 2324 Hyper Text Coffee Pot Control Protocol Compliance Demo</h2>
+			<img src="{{ url_for('static', filename='img/logo.png') }}" width="320" />
+
+			<table width="100%" cellpadding="5" cellspacing="5" border="1" class="controls">
+				<tr>
+					<th>Power</th>
+					<td id="power"></td>
+					<td id="power-set">
+						<button style="font-size: larger; font-family: monospace; border-radius: 4px;" data-value="" id="power-set-button" value="" />
+					</td>
+			
+				</tr>
+			</table>
+
+
+			<footer>lower potrero media lab</footer>
 			{% block body %}{% endblock %}
 		</div>
-
-		<div class="loading">
-			<div class="loading-cont">
-				<div class="loading-cont-cont">
-					<div class="spinner"><div class="throbber throbber_medium"></div></div>
-					<!--<span class="spinner"><i class="glyphicon glyphicon-globe"></i></span>-->
-				</div>
-			</div>
-		</div>
+		
 	    <!--{ % assets "require_indiv" % }
 	        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 	    { % endassets % } -->
 		{% block script %}{% endblock %}
+		
+		
+	    <script>
+		
+		function showPowerState(powerState) {
+			
+			
+			//console.log('here', powerState)
+			
+			if (powerState == 'On') {
+				$('#power').html('On').addClass('on');
+				$('#power-set-button').html("Turn Coffee Machine Off");
+				$('#power-set-button').data('value', 'Off');
+				
+			} else {
+				$('#power').html('Off').removeClass('on');
+				$('#power-set-button').html("Turn Coffee Machine On");
+				$('#power-set-button').data('value', 'On');
+				
+			}
+			
+		}
+		
+		$(function() {
+
+			
+			$('#power-set-button').on('click', function(e) {
+				
+				//console.log($(this).data('value'));
+
+				$.ajax({
+				  url: "/api/state/?power="+$(this).data('value'),
+				  context: document.body
+				}).done(function(data) {
+					if (data['data']['success'] == 'success') {
+						showPowerState(data['data']['power']);
+					}					
+				});
+
+				
+			});
+
+
+			setInterval(function(){ 
+			
+				$.ajax({
+				  url: "/api/state/",
+				  context: document.body
+				}).done(function(data) {
+					
+					if (data) {
+						showPowerState(data['data']['power']);
+					}
+					
+					//console.log(data)
+				});
+			
+			}, 1000);
+			
+			
+
+		});
+		
+		</script>
+		
     </body>
 </html>
