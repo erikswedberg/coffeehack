@@ -64,7 +64,7 @@ th {
 	/*table-layout: fixed;*/
 }
 .controls button {
-	font-size: larger; font-family: monospace; border-radius: 4px;
+	font-size: large; font-family: monospace; border-radius: 4px;
 }
 .light {
 	background-color: bisque;
