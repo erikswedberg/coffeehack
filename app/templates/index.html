@@ -44,7 +44,18 @@
 					<th>Power</th>
 					<td id="power"></td>
 					<td id="power-set">
-						<button style="font-size: larger; font-family: monospace; border-radius: 4px;" data-value="" id="power-set-button" value="" />
+						<button data-value="" id="power-set-button" value="" />
+					</td>
+			
+				</tr>
+				<tr>
+					<th>Brew</th>
+					<td id="brew"></td>
+					<td id="brew-set">
+						<button data-value="Light" id="brew-set-button-light" >Set Brew Light</button>
+						<button data-value="Medium" id="brew-set-button-medium">Set Brew Medium</button>
+						<button data-value="Strong" id="brew-set-button-strong">Set Brew Strong</button>
+
 					</td>
 			
 				</tr>
@@ -82,8 +93,42 @@
 			
 		}
 		
+		function showBrewState(brewState) {
+			
+			
+			//console.log('here', powerState)
+			
+			if (brewState == 'Light') {
+				$('#brew').html('Light').addClass('light').removeClass('medium').removeClass('strong');
+				//$('#power-set-button').html("Turn Coffee Machine Off");
+				//$('#power-set-button').data('value', 'Off');
+				
+			} else if (brewState == "Medium") {
+				$('#brew').html('Medium').addClass('medium').removeClass('light').removeClass('strong');				//$('#power-set-button').html("Turn Coffee Machine On");
+				//$('#power-set-button').data('value', 'On');
+				
+			} else if (brewState == 'Strong') {
+				$('#brew').html('Strong').addClass('strong').removeClass('light').removeClass('medium');		
+			}
+			
+			
+		}
+		
 		$(function() {
 
+			
+			$('#brew-set button').on('click', function(e) {
+				
+				$.ajax({
+				  url: "/api/state/?brew="+$(this).data('value'),
+				  context: document.body
+				}).done(function(data) {
+					if (data['data']['success'] == 'success') {
+						showBrewState(data['data']['brew']);
+					}					
+				});
+				
+			});
 			
 			$('#power-set-button').on('click', function(e) {
 				
@@ -111,6 +156,7 @@
 					
 					if (data) {
 						showPowerState(data['data']['power']);
+						showBrewState(data['data']['brew']);
 					}
 					
 					//console.log(data)

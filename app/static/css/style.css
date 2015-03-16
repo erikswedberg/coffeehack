@@ -63,3 +63,15 @@ th {
 .controls {
 	/*table-layout: fixed;*/
 }
+.controls button {
+	font-size: larger; font-family: monospace; border-radius: 4px;
+}
+.light {
+	background-color: bisque;
+}
+.medium {
+	background-color: peru;
+}
+.strong {
+	background-color: saddlebrown;
+}
